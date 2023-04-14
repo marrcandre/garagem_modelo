@@ -26,10 +26,10 @@ class Acessorio(models.Model):
 
     def __str__(self):
         return self.descricao.title()
-    
+
     class Meta:
-        verbose_name_plural = "acessórios"
-        verbose_name = "acessório"
+        verbose_name_plural = "Acessórios"
+        verbose_name = "Acessório"
 
 
 class Cor(models.Model):
@@ -39,9 +39,9 @@ class Cor(models.Model):
 
     def __str__(self):
         return self.descricao.title()
-    
+
     class Meta:
-        verbose_name_plural = "cores"
+        verbose_name_plural = "Cores"
 
 
 class Veiculo(models.Model):
@@ -52,11 +52,13 @@ class Veiculo(models.Model):
     cor = models.ForeignKey(Cor, on_delete=models.CASCADE)
     acessorios = models.ManyToManyField(Acessorio)
     ano = models.IntegerField(null=True, blank=True, default=0)
-    preco = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, default=0.0)
+    preco = models.DecimalField(
+        max_digits=10, decimal_places=2, null=True, blank=True, default=0.0
+    )
 
     def __str__(self):
         return f"{self.marca} {self.categoria} {self.ano} - {self.cor}"
 
     class Meta:
-        verbose_name_plural = "veículos"
-        verbose_name = "veículo"
+        verbose_name_plural = "Veículos"
+        verbose_name = "Veículo"
