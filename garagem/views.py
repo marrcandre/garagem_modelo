@@ -7,6 +7,8 @@ from garagem.serializers import (
     CorSerializer,
     MarcaSerializer,
     VeiculoSerializer,
+    VeiculoListSerializer,
+    VeiculoDetailSerializer
 )
 
 
@@ -32,4 +34,19 @@ class MarcaViewSet(ModelViewSet):
 
 class VeiculoViewSet(ModelViewSet):
     queryset = Veiculo.objects.all()
-    serializer_class = VeiculoSerializer
+
+    serializer_classes = {
+        "list": VeiculoListSerializer,
+        "retrieve": VeiculoDetailSerializer,
+    }
+
+    def get_serializer_class(self):
+        return self.serializer_classes.get(self.action, VeiculoSerializer)
+
+#testar endpoints do veiculo com curl
+# listar veiculos
+# curl -X GET http://localhost:8000/veiculos/
+# listar veiculo por id
+# curl -X GET http://localhost:8000/veiculos/1/
+# criar veiculo
+# curl -X POST http://localhost:8000/veiculos/ -d '{"marca": 1, "categoria": 1, "cor": 1, "acessorios": [1, 2], "ano": 2020, "preco": 10000.00, "modelo": "Uno"}' -H "Content-Type: application/json"
