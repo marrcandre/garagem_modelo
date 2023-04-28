@@ -1,14 +1,15 @@
 from rest_framework.viewsets import ModelViewSet
 
-from garagem.models import Acessorio, Categoria, Cor, Marca, Veiculo
+from garagem.models import Acessorio, Categoria, Cor, Marca, Veiculo, Modelo
 from garagem.serializers import (
     AcessorioSerializer,
     CategoriaSerializer,
     CorSerializer,
     MarcaSerializer,
+    ModeloSerializer,
     VeiculoSerializer,
     VeiculoListSerializer,
-    VeiculoDetailSerializer
+    VeiculoDetailSerializer,
 )
 
 
@@ -32,6 +33,11 @@ class MarcaViewSet(ModelViewSet):
     serializer_class = MarcaSerializer
 
 
+class ModeloViewSet(ModelViewSet):
+    queryset = Modelo.objects.all()
+    serializer_class = ModeloSerializer
+
+
 class VeiculoViewSet(ModelViewSet):
     queryset = Veiculo.objects.all()
 
@@ -43,7 +49,8 @@ class VeiculoViewSet(ModelViewSet):
     def get_serializer_class(self):
         return self.serializer_classes.get(self.action, VeiculoSerializer)
 
-#testar endpoints do veiculo com curl
+
+# testar endpoints do veiculo com curl
 # listar veiculos
 # curl -X GET http://localhost:8000/veiculos/
 # listar veiculo por id
