@@ -1,24 +1,6 @@
 from django.db import models
 
 
-class Marca(models.Model):
-    """Marca de um veículo, como por exemplo: Fiat, Volkswagen, etc."""
-
-    nome = models.CharField(max_length=50)
-
-    def __str__(self):
-        return self.nome.upper()
-
-
-class Categoria(models.Model):
-    """Categoria de um veículo, como por exemplo: Carro, Moto, Caminhão, etc."""
-
-    descricao = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.descricao.title()
-
-
 class Acessorio(models.Model):
     """Acessórios de um veículo, como por exemplo: Ar condicionado, Direção hidráulica, etc."""
 
@@ -30,6 +12,15 @@ class Acessorio(models.Model):
     class Meta:
         verbose_name_plural = "Acessórios"
         verbose_name = "Acessório"
+
+
+class Categoria(models.Model):
+    """Categoria de um veículo, como por exemplo: Carro, Moto, Caminhão, etc."""
+
+    descricao = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.descricao.title()
 
 
 class Cor(models.Model):
@@ -44,12 +35,32 @@ class Cor(models.Model):
         verbose_name_plural = "Cores"
 
 
+class Marca(models.Model):
+    """Marca de um veículo, como por exemplo: Fiat, Volkswagen, etc."""
+
+    nome = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.nome.upper()
+
+
+class Modelo(models.Model):
+    """Modelo de um veículo, como por exemplo: Gol, Uno, etc."""
+
+    nome = models.CharField(max_length=50)
+    marca = models.ForeignKey(Marca, on_delete=models.PROTECT)
+    categoria = models.ForeignKey(Categoria, on_delete=models.PROTECT)
+
+    def __str__(self):
+        return f"{self.marca} {self.nome} {self.categoria}"
+
+
 class Veiculo(models.Model):
     """Veículo, como por exemplo: Gol, Uno, etc."""
 
-    marca = models.ForeignKey(Marca, on_delete=models.CASCADE)
-    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
-    cor = models.ForeignKey(Cor, on_delete=models.CASCADE)
+    marca = models.ForeignKey(Marca, on_delete=models.PROTECT)
+    categoria = models.ForeignKey(Categoria, on_delete=models.PROTECT)
+    cor = models.ForeignKey(Cor, on_delete=models.PROTECT)
     acessorios = models.ManyToManyField(Acessorio)
     ano = models.IntegerField(null=True, blank=True, default=0)
     preco = models.DecimalField(
