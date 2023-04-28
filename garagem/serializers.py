@@ -26,10 +26,24 @@ class MarcaSerializer(ModelSerializer):
         model = Marca
         fields = "__all__"
 
+
 class ModeloSerializer(ModelSerializer):
     class Meta:
         model = Modelo
         fields = "__all__"
+
+
+class ModeloListSerializer(ModelSerializer):
+    class Meta:
+        model = Modelo
+        fields = ["id", "nome"]
+
+
+class ModeloDetailSerializer(ModelSerializer):
+    class Meta:
+        model = Modelo
+        fields = "__all__"
+        depth = 1
 
 
 class VeiculoSerializer(ModelSerializer):
