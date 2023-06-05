@@ -58,6 +58,7 @@ class Modelo(models.Model):
 class Veiculo(models.Model):
     """Veículo, como por exemplo: Gol, Uno, etc."""
 
+    descricao = models.CharField(max_length=100, null=True, blank=True)
     modelo = models.ForeignKey(Modelo, on_delete=models.PROTECT)
     cor = models.ForeignKey(Cor, on_delete=models.PROTECT)
     acessorios = models.ManyToManyField(Acessorio)
@@ -67,7 +68,7 @@ class Veiculo(models.Model):
     )
 
     def __str__(self):
-        return f"{self.modelo.marca} {self.modelo.nome} {self.ano} {self.cor}"
+        return f" {self.ano} {self.cor}"
 
     class Meta:
         verbose_name_plural = "Veículos"

@@ -55,7 +55,7 @@ class VeiculoSerializer(ModelSerializer):
 class VeiculoListSerializer(ModelSerializer):
     class Meta:
         model = Veiculo
-        fields = ["id", "marca", "modelo", "cor", "ano"]
+        fields = ["id", "descricao", "cor", "ano"]
 
 
 class VeiculoDetailSerializer(ModelSerializer):
